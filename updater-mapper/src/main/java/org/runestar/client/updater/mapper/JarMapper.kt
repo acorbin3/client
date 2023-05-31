@@ -28,7 +28,11 @@ class JarMapper(vararg val classMappers: KClass<out Mapper<Class2>>) {
                 .map { it as KClass<out Mapper<*>> }
         orderDependencies(unordered).map { it.createInstance() }.forEach {
             it.context = context
-            it.map(jar2)
+            try {
+                it.map(jar2)
+            }catch (e: Exception){
+                println("Error, skipping")
+            }
         }
     }
 

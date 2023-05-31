@@ -19,8 +19,10 @@ class ClientPreferences : IdentityMapper.Class() {
     override val predicate = predicateOf<Class2> { it.superType == Any::class.type }
             .and { it.instanceFields.count { it.type == LinkedHashMap::class.type } == 1 }
 
-    class windowMode : InstanceField() {
-        override val predicate = predicateOf<Field2> { it.type == INT_TYPE }
+    @DependsOn(toBuffer::class)
+    class windowMode : OrderMapper.InMethod.Field(toBuffer::class, 0, 1) {
+        override val predicate = predicateOf<Instruction2> { it.index < 50 }
+                .and { it.opcode == GETFIELD && it.fieldType == INT_TYPE }
     }
 
     class parameters : InstanceField() {

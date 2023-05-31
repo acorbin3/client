@@ -47,6 +47,8 @@ class Client : IdentityMapper.Class() {
         override val predicate = predicateOf<Field2> { it.type == type<Scenery>().withDimensions(1) }
     }
 
+
+
     @MethodParameters("id")
     @DependsOn(NPCType::class)
     class getNPCType : StaticMethod() {
@@ -285,6 +287,12 @@ class Client : IdentityMapper.Class() {
     @DependsOn(Scene::class)
     class scene : StaticField() {
         override val predicate = predicateOf<Field2> { it.type == type<Scene>() }
+    }
+
+    @DependsOn(Scene::class)
+    class viewportWalking : StaticUniqueMapper.Field(){
+        //override val predicate = predicateOf<Field2> { it.type == type<Scene>() }
+        override val predicate = predicateOf<Instruction2> { it.opcode == GETSTATIC && it.fieldType == BOOLEAN_TYPE }
     }
 
     @DependsOn(AbstractRasterProvider::class)
@@ -610,6 +618,11 @@ class Client : IdentityMapper.Class() {
 //        override val predicate = predicateOf<Instruction2> { it.opcode == SIPUSH && it.intOperand == 3625 }
 //                .nextWithin(5) { it.opcode == GETSTATIC && it.fieldType == String::class.type }
 //    }
+
+    class createRandomDat : IdentityMapper.StaticMethod() {
+        override val predicate = predicateOf<Method2> { it.returnType == VOID_TYPE }
+                .and { it -> it.instructions.any { it.opcode == LDC && it.ldcCst == "random.dat" } }
+    }
 
     class fps : StaticUniqueMapper.Field() {
         override val predicate = predicateOf<Instruction2> { it.opcode == LDC && it.ldcCst == "Fps:" }
@@ -2769,6 +2782,7 @@ class Client : IdentityMapper.Class() {
     class Scene_viewportYMax : SceneViewportField(3)
     class Scene_viewportXCenter : SceneViewportField(4)
     class Scene_viewportYCenter : SceneViewportField(5)
+
 
     @MethodParameters("isInInstance", "bit")
     @DependsOn(xteaKeys::class)

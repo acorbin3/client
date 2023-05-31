@@ -195,6 +195,11 @@ class Scene : IdentityMapper.Class() {
         override val predicate = predicateOf<Instruction2> { it.opcode == PUTFIELD && it.fieldType == INT_TYPE }
     }
 
+    @DependsOn(init::class)
+    class viewportWalking : UniqueMapper.InMethod.Field(init::class) {
+        override val predicate = predicateOf<Instruction2> { it.opcode == PUTFIELD && it.fieldType == BOOLEAN_TYPE }
+    }
+
     @MethodParameters()
     @DependsOn(tempScenery::class)
     class clearTempScenery : IdentityMapper.InstanceMethod() {

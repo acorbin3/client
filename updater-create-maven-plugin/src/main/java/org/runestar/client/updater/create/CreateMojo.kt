@@ -27,6 +27,7 @@ import org.runestar.client.updater.mapper.*
 import org.runestar.client.updater.mapper.isPrimitive
 import org.runestar.client.updater.mapper.std.classes.Client
 import org.runestar.client.updater.mapper.Class2
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -66,6 +67,7 @@ class CreateMojo : AbstractMojo() {
     private val hooksJson: Path get() = targetDir.resolve("hooks.json")
 
     override fun execute() {
+        println(gamepackJar)
         if (Files.notExists(gamepackJar)) {
             dl()
         }
@@ -78,6 +80,12 @@ class CreateMojo : AbstractMojo() {
     }
 
     private fun dl() {
+
+        //TODO -remember we usually get an issue that the target folder was not created. Just create it here:
+        // C:\Users\C0rbin\Documents\GitHub\Runestar\client\updater\target
+        // And that should fix the issues
+        File("C:\\Users\\C0rbin\\Documents\\GitHub\\Runestar\\client\\updater\\target").mkdirs()
+        println("URL download: ${JAV_CONFIG.gamepackUrl}")
         JAV_CONFIG.gamepackUrl.openStream().use { input ->
             Files.copy(input, gamepackJar, StandardCopyOption.REPLACE_EXISTING)
         }
