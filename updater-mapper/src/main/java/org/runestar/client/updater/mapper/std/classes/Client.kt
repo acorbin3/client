@@ -109,12 +109,12 @@ class Client : IdentityMapper.Class() {
         override val predicate = predicateOf<Method2> { it.returnType == type<LocType>() }
     }
 
-    @MethodParameters("argument1", "argument2", "opcode", "argument0", "action", "targetName", "mouseX", "mouseY")
+    @MethodParameters("argument1", "argument2", "opcode", "argument0", "action", "targetName", "mouseX", "mouseY", "unknown")
     class doAction : StaticMethod() {
         override val predicate = predicateOf<Method2> {
             it.arguments.startsWith(
                     INT_TYPE, INT_TYPE, INT_TYPE, INT_TYPE,
-                    String::class.type, String::class.type, INT_TYPE, INT_TYPE)
+                    String::class.type, String::class.type, INT_TYPE, INT_TYPE, INT_TYPE)
         }
     }
 
@@ -289,11 +289,11 @@ class Client : IdentityMapper.Class() {
         override val predicate = predicateOf<Field2> { it.type == type<Scene>() }
     }
 
-    @DependsOn(Scene::class)
-    class viewportWalking : StaticUniqueMapper.Field(){
-        //override val predicate = predicateOf<Field2> { it.type == type<Scene>() }
-        override val predicate = predicateOf<Instruction2> { it.opcode == GETSTATIC && it.fieldType == BOOLEAN_TYPE }
-    }
+//    @DependsOn(Scene::class)
+//    class viewportWalking : StaticUniqueMapper.Field(){
+//        //override val predicate = predicateOf<Field2> { it.type == type<Scene>() }
+//        override val predicate = predicateOf<Instruction2> { it.opcode == GETSTATIC && it.fieldType == BOOLEAN_TYPE }
+//    }
 
     @DependsOn(AbstractRasterProvider::class)
     class rasterProvider : StaticField() {

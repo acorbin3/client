@@ -84,7 +84,8 @@ class CreateMojo : AbstractMojo() {
         //TODO -remember we usually get an issue that the target folder was not created. Just create it here:
         // C:\Users\C0rbin\Documents\GitHub\Runestar\client\updater\target
         // And that should fix the issues
-        File("C:\\Users\\C0rbin\\Documents\\GitHub\\Runestar\\client\\updater\\target").mkdirs()
+        File("/Users/adamcorbin/Documents/Github/RuneStar/updater/target").mkdirs()
+        //r/updater-create-maven-plugin
         println("URL download: ${JAV_CONFIG.gamepackUrl}")
         JAV_CONFIG.gamepackUrl.openStream().use { input ->
             Files.copy(input, gamepackJar, StandardCopyOption.REPLACE_EXISTING)
